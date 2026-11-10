@@ -2,9 +2,10 @@ const grid=document.querySelector('#project-grid');
 const categories=['design','motion','ui','branding','branding','design','design','branding','motion'];
 const descriptors=['Social media design','Motion graphics','E-commerce UI','Brand identity','Brand identity','Vector illustration','Social media design','Logo design','2D animation'];
 const ordered=[3,4,1,0,2,8,5,6,7];
+const projectSlugs=["social-media-design","motion-graphics","mens-grooming-ecommerce-ui","floriaa-jewelry-brand-identity","cafe-brew-brand-identity","vector-illustration","event-day-social-posts","botx-logo","2d-animation"];
 function renderProjects(filter='all'){
-  const list=ordered.map(i=>({...portfolioProjects[i],category:categories[i],descriptor:descriptors[i],number:String(i+1).padStart(2,'0')})).filter(p=>filter==='all'||p.category===filter);
-  grid.innerHTML=list.map(p=>`<article class="project"><a class="project-media" href="${p.url}" target="_blank" rel="noopener noreferrer" aria-label="View ${p.name} on Behance"><img src="${p.image}" alt="Cover artwork for ${p.name}" loading="lazy"><span class="project-arrow" aria-hidden="true">↗</span></a><div class="project-info"><div><h3>${p.name}</h3><span>${p.descriptor} · View full project on Behance</span></div><span class="project-number">${p.number}</span></div></article>`).join('');
+  const list=ordered.map(i=>({...portfolioProjects[i],category:categories[i],descriptor:descriptors[i],number:String(i+1).padStart(2,'0'),slug:projectSlugs[i]})).filter(p=>filter==='all'||p.category===filter);
+  grid.innerHTML=list.map(p=>`<article class="project"><a class="project-media" href="/projects/${p.slug}.html" aria-label="View ${p.name} project"><img src="${p.image}" alt="Cover artwork for ${p.name}" loading="lazy"><span class="project-arrow" aria-hidden="true">↗</span></a><div class="project-info"><div><h3>${p.name}</h3><span>${p.descriptor} · View project</span></div><span class="project-number">${p.number}</span></div></article>`).join('');
 }
 renderProjects();
 document.querySelectorAll('.filters button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.filters button').forEach(b=>{b.classList.toggle('active',b===btn);b.setAttribute('aria-pressed',String(b===btn))});renderProjects(btn.dataset.filter)}));
